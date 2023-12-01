@@ -1,0 +1,10 @@
+cabal-version:      2.4
+name:               haskell
+version:            0.1.0.0
+
+author:             aattoa
+maintainer:         aattoa@proton.me
+
+executable 1
+    main-is:       1.hs
+    build-depends: base, text
