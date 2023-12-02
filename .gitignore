@@ -7,3 +7,5 @@ languages.txt
 **/target
 **/out
 **/dist*
+**/inputs
+**/info

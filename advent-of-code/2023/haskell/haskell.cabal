@@ -8,3 +8,7 @@ maintainer:         aattoa@proton.me
 executable 1
     main-is:       1.hs
     build-depends: base, text
+
+executable 2
+    main-is:       2.hs
+    build-depends: base, parsec
