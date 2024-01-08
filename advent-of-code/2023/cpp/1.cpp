@@ -1,8 +1,4 @@
-#include <string_view>
-#include <string>
-#include <algorithm>
-#include <iostream>
-#include <fstream>
+#include <util.hpp>
 
 auto is_digit(char const c) -> bool
 {
@@ -11,7 +7,9 @@ auto is_digit(char const c) -> bool
 
 auto first_digit_as_integer(auto const begin, auto const end) -> int
 {
-    return *std::find_if(begin, end, is_digit) - '0';
+    auto const it = std::find_if(begin, end, is_digit);
+    cpputil::always_assert(it != end);
+    return *it - '0';
 }
 
 auto parse_integer(std::string_view const string) -> int
@@ -20,10 +18,10 @@ auto parse_integer(std::string_view const string) -> int
          + first_digit_as_integer(rbegin(string), rend(string));
 }
 
-auto replace(std::string& string, std::string_view const a, std::string_view const b) -> bool
+auto replace(std::string& string, std::string_view const from, std::string_view const to) -> bool
 {
-    if (auto offset = string.find(a); offset != std::string::npos) {
-        string.replace(offset, a.size(), b);
+    if (auto offset = string.find(from); offset != std::string::npos) {
+        string.replace(offset, from.size(), to);
         return true;
     }
     return false;
@@ -44,15 +42,29 @@ auto fix_digits(std::string& string) -> void
     // clang-format on
 }
 
+auto part_1(std::string_view const line) -> int
+{
+    return parse_integer(line);
+}
+
+auto part_2(std::string line) -> int
+{
+    fix_digits(line);
+    return parse_integer(line);
+}
+
+auto solve(auto const& callback) -> int
+{
+    int  sum  = 0;
+    auto file = cpputil::io::File::open_read("inputs/1");
+    for (std::string const& line : cpputil::io::lines(file.get())) {
+        sum += callback(line);
+    }
+    return sum;
+}
+
 auto main() -> int
 {
-    int sum = 0;
-    {
-        std::ifstream file { "input" };
-        for (std::string line; std::getline(file, line);) {
-            fix_digits(line);
-            sum += parse_integer(line);
-        }
-    }
-    std::cout << sum << '\n';
+    std::println("1: {}", solve(part_1));
+    std::println("2: {}", solve(part_2));
 }

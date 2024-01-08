@@ -1,20 +1,15 @@
-#include <algorithm>
+#include <util.hpp>
 #include <charconv>
-#include <cstddef>
-#include <format>
-#include <iostream>
-#include <fstream>
-#include <string_view>
 
 struct Colors {
-    std::size_t red {};
-    std::size_t blue {};
-    std::size_t green {};
+    int red {};
+    int blue {};
+    int green {};
 };
 
 struct Game {
-    std::size_t id {};
-    Colors      colors {};
+    int    id {};
+    Colors colors {};
 };
 
 auto remove_prefix(std::string_view& string, std::string_view const prefix) -> bool
@@ -26,15 +21,15 @@ auto remove_prefix(std::string_view& string, std::string_view const prefix) -> b
     return result;
 }
 
-auto extract_integer(std::string_view& string) -> std::size_t
+auto extract_integer(std::string_view& string) -> int
 {
-    std::size_t value {};
+    int value {};
     auto const [ptr, _] = std::from_chars(string.data(), string.data() + string.size(), value);
-    string.remove_prefix(static_cast<std::size_t>(std::distance(string.data(), ptr)));
+    string.remove_prefix(static_cast<int>(std::distance(string.data(), ptr)));
     return value;
 }
 
-auto extract_color(std::string_view& string) -> std::size_t Colors::*
+auto extract_color(std::string_view& string) -> int Colors::*
 {
     if (remove_prefix(string, "red")) {
         return &Colors::red;
@@ -45,7 +40,7 @@ auto extract_color(std::string_view& string) -> std::size_t Colors::*
     if (remove_prefix(string, "green")) {
         return &Colors::green;
     }
-    std::abort();
+    cpputil::unreachable();
 }
 
 auto parse_game(std::string_view string) -> Game
@@ -67,24 +62,28 @@ auto parse_game(std::string_view string) -> Game
     return game;
 };
 
-auto part_1(Game const game) -> std::size_t
+auto part_1(Game const game) -> int
 {
     return game.colors.red <= 12 && game.colors.blue <= 14 && game.colors.green <= 13 ? game.id : 0;
 }
 
-auto part_2(Game const game) -> std::size_t
+auto part_2(Game const game) -> int
 {
     return game.colors.red * game.colors.blue * game.colors.green;
 }
 
+auto solve(auto const& callback) -> int
+{
+    int  sum  = 0;
+    auto file = cpputil::io::File::open_read("inputs/2");
+    for (std::string const& line : cpputil::io::lines(file.get())) {
+        sum += callback(parse_game(line));
+    }
+    return sum;
+}
+
 auto main() -> int
 {
-    std::size_t sum = 0;
-    {
-        std::ifstream file { "inputs/2" };
-        for (std::string line; std::getline(file, line);) {
-            sum += part_1(parse_game(line));
-        }
-    }
-    std::cout << sum << '\n';
+    std::println("1: {}", solve(part_1));
+    std::println("2: {}", solve(part_2));
 }

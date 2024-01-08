@@ -24,8 +24,8 @@ replaceWords = foldr (.) id
 fixDigits :: Text -> Text
 fixDigits s = let r = replaceWords s in if s == r then s else fixDigits r
 
-sumLines :: String -> Int
-sumLines = sum . map (parseString . fixDigits) . Data.Text.lines . pack
+sumLines :: Text -> Int
+sumLines = sum . map (parseString . fixDigits) . Data.Text.lines
 
 main :: IO ()
-main = readFile "input" >>= print . sumLines
+main = readFile "inputs/1" >>= print . sumLines . pack

@@ -1,7 +1,6 @@
 import Text.Parsec
 import Text.Parsec.String (Parser)
 import Text.Parsec.Token (GenTokenParser(integer, identifier))
-import Data.List (partition)
 import Data.Either (fromRight)
 
 data Color = Color { colorName :: String, colorValue :: Int } deriving (Show)

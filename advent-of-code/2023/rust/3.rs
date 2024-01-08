@@ -1,10 +1,5 @@
 use std::collections::HashMap;
 
-use std::{
-    fs::File,
-    io::{self, BufRead},
-};
-
 #[derive(PartialEq, Eq, Hash)]
 struct Coords {
     x: usize,
@@ -91,10 +86,7 @@ fn part_two(grid: &[String]) -> usize {
 }
 
 fn main() {
-    let grid: Vec<String> = io::BufReader::new(File::open("inputs/3").unwrap())
-        .lines()
-        .map(Result::unwrap)
-        .collect();
-    println!("{}", part_one(&grid));
-    println!("{}", part_two(&grid));
+    let grid: Vec<String> = util::lines(3).collect();
+    println!("1: {}", part_one(&grid));
+    println!("2: {}", part_two(&grid));
 }

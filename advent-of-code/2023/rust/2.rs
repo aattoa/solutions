@@ -1,8 +1,3 @@
-use std::{
-    fs::File,
-    io::{self, BufRead},
-};
-
 struct Colors {
     red: u32,
     blue: u32,
@@ -48,12 +43,13 @@ fn part_two(game: Game) -> u32 {
     game.colors.red * game.colors.blue * game.colors.green
 }
 
+fn solve(callback: fn(Game) -> u32) -> u32 {
+    util::lines(2).map(|line| callback(parse_game(&line))).sum()
+}
+
 fn main() {
-    let sum = io::BufReader::new(File::open("inputs/2").unwrap())
-        .lines()
-        .map(|line| part_two(parse_game(&line.unwrap())))
-        .sum::<u32>();
-    println!("{}", sum);
+    println!("1: {}", solve(part_one));
+    println!("2: {}", solve(part_two));
 }
 
 #[cfg(test)]

@@ -1,13 +1,8 @@
-use std::{
-    fs::File,
-    io::{self, BufRead},
-};
-
 fn first_digit_as_integer(mut it: impl Iterator<Item = char>) -> u32 {
-    it.find(|c| c.is_ascii_digit()).and_then(|c| c.to_digit(10)).unwrap()
+    it.find_map(|c| c.to_digit(10)).unwrap()
 }
 
-fn parse_string(string: &str) -> u32 {
+fn parse(string: &str) -> u32 {
     first_digit_as_integer(string.chars()) * 10 + first_digit_as_integer(string.chars().rev())
 }
 
@@ -36,12 +31,13 @@ fn fix_digits(mut string: String) -> String {
     string
 }
 
+fn solve(callback: fn(String) -> u32) -> u32 {
+    util::lines(1).map(callback).sum()
+}
+
 fn main() {
-    let sum = io::BufReader::new(File::open("input").unwrap())
-        .lines()
-        .map(|line| parse_string(&line.map(fix_digits).unwrap()))
-        .sum::<u32>();
-    println!("{}", sum);
+    println!("1: {}", solve(|line| parse(&line)));
+    println!("2: {}", solve(|line| parse(&fix_digits(line))));
 }
 
 #[cfg(test)]
@@ -53,10 +49,10 @@ mod tests {
     }
     #[test]
     fn parse_string() {
-        assert_eq!(12, super::parse_string("1abc2"));
-        assert_eq!(38, super::parse_string("pqr3stu8vwx"));
-        assert_eq!(15, super::parse_string("a1b2c3d4e5f"));
-        assert_eq!(77, super::parse_string("treb7uchet"));
+        assert_eq!(12, super::parse("1abc2"));
+        assert_eq!(38, super::parse("pqr3stu8vwx"));
+        assert_eq!(15, super::parse("a1b2c3d4e5f"));
+        assert_eq!(77, super::parse("treb7uchet"));
     }
     #[test]
     fn fix_digits() {

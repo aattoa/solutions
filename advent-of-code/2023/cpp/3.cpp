@@ -1,17 +1,4 @@
-#include <cstddef>
-#include <utility>
-#include <compare>
-#include <concepts>
-
-#include <span>
-#include <vector>
-#include <optional>
-#include <string>
-#include <string_view>
-#include <unordered_map>
-
-#include <iostream>
-#include <fstream>
+#include <util.hpp>
 
 using Grid_view = std::span<std::string const>;
 
@@ -37,8 +24,9 @@ auto is_digit(char const c) -> bool
 }
 
 auto adjacent_symbol_if(
-    Grid_view const grid, Coords const coords, std::predicate<char> auto const& is_symbol)
-    -> std::optional<Coords>
+    Grid_view const                  grid,
+    Coords const                     coords,
+    std::predicate<char> auto const& is_symbol) -> std::optional<Coords>
 {
     for (int dy = -1; dy != 2; ++dy) {
         for (int dx = -1; dx != 2; ++dx) {
@@ -86,7 +74,7 @@ auto parse_grid(
     }
 }
 
-auto part_one(Grid_view const grid) -> std::size_t
+auto part_1(Grid_view const grid) -> std::size_t
 {
     std::size_t sum {};
     parse_grid(
@@ -96,7 +84,7 @@ auto part_one(Grid_view const grid) -> std::size_t
     return sum;
 }
 
-auto part_two(Grid_view const grid) -> std::size_t
+auto part_2(Grid_view const grid) -> std::size_t
 {
     std::unordered_map<Coords, std::vector<std::size_t>> gear_map;
     parse_grid(
@@ -113,14 +101,15 @@ auto part_two(Grid_view const grid) -> std::size_t
     return sum;
 }
 
+auto read_grid() -> std::vector<std::string>
+{
+    auto const file = cpputil::io::File::open_read("inputs/3");
+    return std::ranges::to<std::vector>(cpputil::io::lines(file.get()));
+}
+
 auto main() -> int
 {
-    std::vector<std::string> grid;
-    {
-        std::ifstream file { "inputs/3" };
-        for (std::string line; std::getline(file, line);) {
-            grid.push_back(std::move(line));
-        }
-    }
-    std::cout << part_one(grid) << '\n' << part_two(grid) << '\n';
+    auto const grid = read_grid();
+    std::println("1: {}", part_1(grid));
+    std::println("2: {}", part_2(grid));
 }
