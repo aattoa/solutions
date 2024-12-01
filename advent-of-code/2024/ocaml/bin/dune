@@ -1,0 +1,4 @@
+(executable
+ (public_name oaoc)
+ (name main)
+ (libraries oaoc))

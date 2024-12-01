@@ -1,0 +1,14 @@
+(lang dune 3.16)
+
+(name oaoc)
+
+(generate_opam_files true)
+
+(authors "aattoa")
+
+(package
+ (name oaoc)
+ (synopsis "My solutions for Advent of Code 2024")
+ (depends ocaml dune))
+
+; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
