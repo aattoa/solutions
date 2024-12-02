@@ -1,4 +1,9 @@
 (test
-  (name day1)
-  (modules day1)
+  (name days)
+  (modules days)
+  (libraries oaoc alcotest))
+
+(test
+  (name util)
+  (modules util)
   (libraries oaoc alcotest))
