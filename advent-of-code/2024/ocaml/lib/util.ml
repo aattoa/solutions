@@ -13,3 +13,12 @@ let rec any bs =
 
 let rec all bs =
   match Seq.uncons bs with Some (b, bs) -> b && all bs | None -> true
+
+let read_file path =
+  (* TODO: In_channel.input_all causes weird behavior *)
+  let channel = open_in path in
+  let lines = In_channel.input_lines channel in
+  In_channel.close channel;
+  String.concat "\n" lines
+
+let lines = String.split_on_char '\n'

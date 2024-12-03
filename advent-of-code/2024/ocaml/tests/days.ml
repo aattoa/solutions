@@ -22,17 +22,36 @@ let cases : case list =
           "1 3 6 7 9";
         ];
     };
+    {
+      day = 3;
+      part1 = "161";
+      part2 = "161";
+      input =
+        [
+          "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))";
+        ];
+    };
+    {
+      day = 3;
+      part1 = "161";
+      part2 = "48";
+      input =
+        [
+          "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
+        ];
+    };
   ]
 
-let test case =
+let test idx case =
   let module Day = (val Oaoc.Days.day case.day) in
   let check_eq = Alcotest.(check string) "equal" in
-  ( Printf.sprintf "Day %i" case.day,
+  let input = String.concat "\n" case.input in
+  ( Printf.sprintf "Test %i, Day %i" idx case.day,
     [
       Alcotest.test_case "Part 1" `Quick (fun () ->
-          check_eq case.part1 (Day.part1 (Array.of_list case.input)));
+          check_eq case.part1 (Day.part1 input));
       Alcotest.test_case "Part 2" `Quick (fun () ->
-          check_eq case.part2 (Day.part2 (Array.of_list case.input)));
+          check_eq case.part2 (Day.part2 input));
     ] )
 
-let () = Alcotest.run "Days" (List.map test cases)
+let () = Alcotest.run "Days" (List.mapi test cases)
