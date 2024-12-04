@@ -7,3 +7,8 @@
   (name util)
   (modules util)
   (libraries oaoc alcotest))
+
+(test
+  (name grid)
+  (modules grid)
+  (libraries oaoc alcotest))

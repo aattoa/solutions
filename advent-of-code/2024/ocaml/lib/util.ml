@@ -1,3 +1,6 @@
+let id x = x
+let is_some_and f opt = match opt with Some x -> f x | None -> false
+let is_none_or f opt = match opt with Some x -> f x | None -> true
 let int_of_bool bool = if bool then 1 else 0
 
 let rec range lo hi =
@@ -22,3 +25,7 @@ let read_file path =
   String.concat "\n" lines
 
 let lines = String.split_on_char '\n'
+
+let todo msg =
+  Printf.eprintf "todo: %s\n" msg;
+  exit 0

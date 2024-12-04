@@ -40,6 +40,24 @@ let cases : case list =
           "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))";
         ];
     };
+    {
+      day = 4;
+      part1 = "18";
+      part2 = "9";
+      input =
+        [
+          "MMMSXXMASM";
+          "MSAMXMSMSA";
+          "AMXSXMAAMM";
+          "MSAMASMSMX";
+          "XMASAMXAMM";
+          "XXAMMXXAMA";
+          "SMSMSASXSS";
+          "SAXAMASAAA";
+          "MAMMMXMMMM";
+          "MXMXAXMASX";
+        ];
+    };
   ]
 
 let test idx case =
