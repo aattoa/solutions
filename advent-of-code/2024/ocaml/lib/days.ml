@@ -6,6 +6,6 @@ module type Day = sig
 end
 
 let days : (module Day) list =
-  [ (module Day1); (module Day2); (module Day3); (module Day4) ]
+  [ (module Day1); (module Day2); (module Day3); (module Day4); (module Day5) ]
 
 let day (n : int) : (module Day) = List.nth days (n - 1)

@@ -43,7 +43,7 @@ let all =
 
 let is_some_and =
   let check = check bool "bool equal" in
-  let is_some_and = Util.is_some_and Util.id in
+  let is_some_and = Util.is_some_and Fun.id in
   [
     case "none" (fun () -> check false (is_some_and None));
     case "some false" (fun () -> check false (is_some_and (Some false)));
@@ -52,7 +52,7 @@ let is_some_and =
 
 let is_none_or =
   let check = check bool "bool equal" in
-  let is_none_or = Util.is_none_or Util.id in
+  let is_none_or = Util.is_none_or Fun.id in
   [
     case "none" (fun () -> check true (is_none_or None));
     case "some false" (fun () -> check false (is_none_or (Some false)));
