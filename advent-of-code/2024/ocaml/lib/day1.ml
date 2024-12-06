@@ -16,17 +16,13 @@ let parse string =
 
 let occurrences x = fold_left (fun acc y -> acc + if x = y then 1 else 0) 0
 
-let solve f lines =
-  let left, right = parse lines in
-  let sum = ref 0 in
-  for i = 0 to length left - 1 do
-    sum := !sum + f i left right
-  done;
-  string_of_int !sum
+let solve f input =
+  let left, right = parse input in
+  Seq.init (length left) Fun.id |> Util.sum (f left right) |> string_of_int
 
-let p1 i left right = abs (left.(i) - right.(i))
+let p1 left right i = abs (left.(i) - right.(i))
 
-let p2 i left right =
+let p2 left right i =
   let n = get left i in
   n * occurrences n right
 

@@ -15,13 +15,12 @@ let p1 ints =
   | _ -> true
 
 let p2 ints =
-  Util.range 0 (List.length ints)
-  |> Seq.map (fun n -> Util.remove_nth n ints |> p1)
-  |> Util.any
+  Seq.init (List.length ints) Fun.id
+  |> Seq.exists (fun n -> p1 (Util.remove_nth n ints))
 
 let solve check input =
   let safe line = parse line |> check |> Util.int_of_bool in
-  Util.lines input |> List.map safe |> List.fold_left ( + ) 0 |> string_of_int
+  Util.lines input |> List.to_seq |> Util.sum safe |> string_of_int
 
 let part1 = solve p1
 let part2 = solve p2

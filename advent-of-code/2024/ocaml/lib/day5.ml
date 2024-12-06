@@ -6,11 +6,6 @@ let sort_update rules =
   | Some xs -> if List.mem r xs then -1 else 1
   | None -> 1
 
-let add_rule rules l r =
-  match Hashtbl.find_opt rules r with
-  | Some list -> Hashtbl.replace rules r (l :: list)
-  | None -> Hashtbl.add rules r [ l ]
-
 let rec is_valid rules update encountered =
   match update with
   | x :: xs -> (
@@ -26,10 +21,9 @@ let parse_update line = String.split_on_char ',' line |> List.map int_of_string
 let rec parse count rules lines =
   match lines with
   | "" :: lines ->
-      let sum acc line = acc + count rules (parse_update line) in
-      List.fold_left sum 0 lines
+      Util.sum (Fun.compose (count rules) parse_update) (List.to_seq lines)
   | line :: lines ->
-      Scanf.sscanf line "%i|%i" (add_rule rules);
+      Scanf.sscanf line "%i|%i" (Fun.flip (Util.add_to_list rules));
       parse count rules lines
   | [] -> invalid_arg "Unexpected end of input"
 

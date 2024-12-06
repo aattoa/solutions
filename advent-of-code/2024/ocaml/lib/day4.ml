@@ -8,40 +8,35 @@ let rec try_read grid x y dx dy chars =
       grid_check grid x y c && try_read grid x y dx dy cs
   | [] -> true
 
-let p1 grid x y =
+let p1 grid pos =
   let count = ref 0 in
-  if Grid.get grid { x; y } = 'X' then
+  if Grid.get grid pos = 'X' then
     for dy = -1 to 1 do
       for dx = -1 to 1 do
-        if try_read grid x y dx dy [ 'M'; 'A'; 'S' ] then count := !count + 1
+        if try_read grid pos.x pos.y dx dy [ 'M'; 'A'; 'S' ] then
+          count := !count + 1
       done
     done;
   !count
 
-let p2 grid x y =
-  if Grid.get grid { x; y } != 'A' then 0
+let p2 grid pos =
+  if Grid.get grid pos != 'A' then 0
   else
     let arms = ref 0 in
     for dy = -1 to 1 do
       for dx = -1 to 1 do
         if
           (dx != 0 && dy != 0)
-          && grid_check grid (x + dx) (y + dy) 'M'
-          && grid_check grid (x - dx) (y - dy) 'S'
+          && grid_check grid (pos.x + dx) (pos.y + dy) 'M'
+          && grid_check grid (pos.x - dx) (pos.y - dy) 'S'
         then arms := !arms + 1
       done
     done;
     if !arms = 2 then 1 else 0
 
-let solve check string =
+let solve count string =
   let grid = Grid.of_string_lines string in
-  let count = ref 0 in
-  for y = 0 to grid.h - 1 do
-    for x = 0 to grid.w - 1 do
-      count := !count + check grid x y
-    done
-  done;
-  string_of_int !count
+  Grid.positions grid |> Util.sum (count grid) |> string_of_int
 
 let part1 = solve p1
 let part2 = solve p2
