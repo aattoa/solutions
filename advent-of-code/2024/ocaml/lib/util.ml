@@ -18,6 +18,8 @@ let add_to_list tbl key value =
   | Some list -> Hashtbl.replace tbl key (value :: list)
   | None -> Hashtbl.add tbl key [ value ]
 
+let str_drop_last n s = String.sub s 0 (String.length s - n)
+
 let lines = String.split_on_char '\n'
 
 let read_file path =
