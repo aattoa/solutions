@@ -5,8 +5,11 @@ module Pos : sig
   type t = pos
   val compare : t -> t -> int
   val advance : Direction.t -> t -> t
+  val sub : t -> t -> t
+  val add : t -> t -> t
 end
 
+val is_valid_pos : 'a t -> pos -> bool
 val get_opt : 'a t -> pos -> 'a option
 val get : 'a t -> pos -> 'a
 val set : 'a t -> pos -> 'a -> unit

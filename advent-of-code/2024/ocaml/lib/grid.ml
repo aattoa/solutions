@@ -7,12 +7,14 @@ module Pos = struct
   let advance d pos =
     let x, y = Direction.offset d in
     { x = pos.x + x; y = pos.y + y }
+  let sub a b = { x = a.x - b.x; y = a.y - b.y }
+  let add a b = { x = a.x + b.x; y = a.y + b.y }
 end
 
-let is_valid_index grid { x; y } = 0 <= x && x < grid.w && 0 <= y && y < grid.h
+let is_valid_pos grid { x; y } = 0 <= x && x < grid.w && 0 <= y && y < grid.h
 
 let to_index grid pos =
-  if is_valid_index grid pos then Some ((pos.y * grid.w) + pos.x) else None
+  if is_valid_pos grid pos then Some ((pos.y * grid.w) + pos.x) else None
 
 let get_opt grid pos = to_index grid pos |> Option.map (Array.get grid.arr)
 let get grid pos = to_index grid pos |> Option.get |> Array.get grid.arr
