@@ -15,6 +15,7 @@ let days : (module Day) list =
     (module Day6);
     (module Day7);
     (module Day8);
+    (module Day10);
     (module Day11);
   ]
 

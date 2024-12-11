@@ -30,10 +30,19 @@ let is_none_or =
     case "some true" (fun () -> check true (is_none_or (Some true)));
   ]
 
+let int_of_digit =
+  let check = check int "int equal" in
+  [
+    (case "0" @@ fun () -> check 0 (Util.int_of_digit '0'));
+    (case "5" @@ fun () -> check 5 (Util.int_of_digit '5'));
+    (case "9" @@ fun () -> check 9 (Util.int_of_digit '9'));
+  ]
+
 let () =
   run "Util"
     [
       ("remove_nth", remove_nth);
       ("is_some_and", is_some_and);
       ("is_none_or", is_none_or);
+      ("int_of_digit", int_of_digit);
     ]

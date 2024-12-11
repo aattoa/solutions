@@ -29,9 +29,12 @@ let find predicate grid =
 let find_eq x = find (( = ) x)
 
 (* Inefficient, fine for now *)
-let of_string_lines string =
+let of_string_lines_map f string =
   let lines = Util.lines string in
-  let arr = List.to_seq lines |> Seq.flat_map String.to_seq |> Array.of_seq in
   let w = String.length (List.nth lines 0) in
   let h = List.length lines in
-  { arr; w; h }
+  assert (w != 0 && h != 0);
+  let seq = List.to_seq lines |> Seq.flat_map String.to_seq |> Seq.map f in
+  { arr = Array.of_seq seq; w; h }
+
+let of_string_lines = of_string_lines_map Fun.id

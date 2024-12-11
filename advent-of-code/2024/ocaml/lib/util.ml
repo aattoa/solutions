@@ -1,4 +1,5 @@
 let int_of_bool bool = if bool then 1 else 0
+let int_of_digit char = int_of_char char - int_of_char '0'
 
 let is_some_and f opt = match opt with Some x -> f x | None -> false
 let is_none_or f opt = match opt with Some x -> f x | None -> true
@@ -18,6 +19,8 @@ let add_to_list tbl key value =
   match Hashtbl.find_opt tbl key with
   | Some list -> Hashtbl.replace tbl key (value :: list)
   | None -> Hashtbl.add tbl key [ value ]
+
+let tbl_contains tbl key = Hashtbl.find_opt tbl key |> Option.is_some
 
 let str_drop_last n s = String.sub s 0 (String.length s - n)
 
