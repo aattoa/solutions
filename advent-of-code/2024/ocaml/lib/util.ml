@@ -2,6 +2,7 @@ let int_of_bool bool = if bool then 1 else 0
 
 let is_some_and f opt = match opt with Some x -> f x | None -> false
 let is_none_or f opt = match opt with Some x -> f x | None -> true
+let get_or_else f opt = match opt with Some x -> x | None -> f ()
 
 let sum f = Seq.fold_left (fun acc x -> acc + f x) 0
 
@@ -19,6 +20,12 @@ let add_to_list tbl key value =
   | None -> Hashtbl.add tbl key [ value ]
 
 let str_drop_last n s = String.sub s 0 (String.length s - n)
+
+let digits n =
+  if n = 0 then 1
+  else
+    let rec aux n = if n = 0 then 0 else 1 + aux (n / 10) in
+    aux n
 
 let lines = String.split_on_char '\n'
 

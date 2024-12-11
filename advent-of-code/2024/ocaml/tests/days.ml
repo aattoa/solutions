@@ -149,6 +149,12 @@ let cases : case list =
           "............";
         ];
     };
+    {
+      day = 11;
+      part1 = "55312";
+      part2 = "65601038650482";
+      input = [ "125 17" ];
+    };
   ]
 
 let test idx case =

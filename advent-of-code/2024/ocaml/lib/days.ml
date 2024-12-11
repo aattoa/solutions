@@ -15,6 +15,7 @@ let days : (module Day) list =
     (module Day6);
     (module Day7);
     (module Day8);
+    (module Day11);
   ]
 
 let day (n : int) : (module Day) = List.nth days (n - 1)
