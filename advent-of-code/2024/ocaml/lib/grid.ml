@@ -28,6 +28,10 @@ let find predicate grid =
 
 let find_eq x = find (( = ) x)
 
+let fill grid = Array.fill grid.arr 0 (Array.length grid.arr)
+
+let make (w, h) x = { arr = Array.make (w * h) x; w; h }
+
 (* Inefficient, fine for now *)
 let of_string_lines_map f string =
   let lines = Util.lines string in

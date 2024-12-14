@@ -1,3 +1,10 @@
+module Ops : sig
+  val ( <. ) : ('b -> 'c) -> ('a -> 'b) -> 'a -> 'c
+  val ( >. ) : ('a -> 'b) -> ('b -> 'c) -> 'a -> 'c
+  val ( += ) : int ref -> int -> unit
+  val ( -= ) : int ref -> int -> unit
+end
+
 val int_of_bool : bool -> int
 val int_of_digit : char -> int
 

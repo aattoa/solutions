@@ -1,3 +1,10 @@
+module Ops = struct
+  let ( <. ) f g x = f (g x)
+  let ( >. ) f g x = g (f x)
+  let ( += ) l r = l := !l + r
+  let ( -= ) l r = l := !l - r
+end
+
 let int_of_bool bool = if bool then 1 else 0
 let int_of_digit char = int_of_char char - int_of_char '0'
 

@@ -18,5 +18,7 @@ val positions : 'a t -> pos Seq.t
 val find : ('a -> bool) -> 'a t -> pos option
 val find_eq : 'a -> 'a t -> pos option
 
+val fill : 'a t -> 'a -> unit
+val make : int * int -> 'a -> 'a t
 val of_string_lines_map : (char -> 'a) -> string -> 'a t
 val of_string_lines : string -> char t
