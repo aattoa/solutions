@@ -16,7 +16,7 @@ let p1 ints =
 
 let p2 ints =
   Seq.init (List.length ints) Fun.id
-  |> Seq.exists (fun n -> p1 (Util.remove_nth n ints))
+  |> Seq.exists (fun n -> p1 (Util.list_remove_nth n ints))
 
 let solve check input =
   let safe line = parse line |> check |> Util.int_of_bool in

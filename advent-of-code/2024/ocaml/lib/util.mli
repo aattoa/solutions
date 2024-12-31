@@ -14,13 +14,17 @@ val get_or_else : (unit -> 'a) -> 'a option -> 'a
 
 val sum : ('a -> int) -> 'a Seq.t -> int
 
-val array_nth : 'a array -> int -> 'a option
+val seq_nth : int -> 'a Seq.t -> 'a option
+val arr_nth : int -> 'a array -> 'a option
+val arr_swap : 'a array -> int -> int -> unit
 
-val remove_nth : int -> 'a list -> 'a list
+val list_remove_nth : int -> 'a list -> 'a list
+val list_split_by : ('a -> bool) -> 'a list -> 'a list * 'a list
 
 val add_to_list : ('a, 'b list) Hashtbl.t -> 'a -> 'b -> unit
 val tbl_contains : ('a, 'b) Hashtbl.t -> 'a -> bool
 
+val str_empty : string -> bool
 val str_drop_last : int -> string -> string
 
 val digits : int -> int

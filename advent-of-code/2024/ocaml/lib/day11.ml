@@ -20,8 +20,8 @@ let rec explore mem budget n =
     Hashtbl.find_opt mem (budget, n) |> Util.get_or_else compute
 
 let solve budget input =
-  String.split_on_char ' ' input
-  |> List.to_seq |> Seq.map int_of_string
+  List.to_seq (String.split_on_char ' ' input)
+  |> Seq.map int_of_string
   |> Util.sum (explore (Hashtbl.create 100000) budget)
   |> string_of_int
 

@@ -3,9 +3,9 @@ open Oaoc
 
 let case name = test_case name `Quick
 
-let remove_nth =
+let list_remove_nth =
   let check = check (list int) "int list equal" in
-  let remove n = Util.remove_nth n [ 10; 20; 30 ] in
+  let remove n = Util.list_remove_nth n [ 10; 20; 30 ] in
   [
     case "0" (fun () -> check [ 20; 30 ] (remove 0));
     case "1" (fun () -> check [ 10; 30 ] (remove 1));
@@ -41,7 +41,7 @@ let int_of_digit =
 let () =
   run "Util"
     [
-      ("remove_nth", remove_nth);
+      ("list_remove_nth", list_remove_nth);
       ("is_some_and", is_some_and);
       ("is_none_or", is_none_or);
       ("int_of_digit", int_of_digit);

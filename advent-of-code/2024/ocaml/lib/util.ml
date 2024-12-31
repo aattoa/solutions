@@ -14,13 +14,30 @@ let get_or_else f opt = match opt with Some x -> x | None -> f ()
 
 let sum f = Seq.fold_left (fun acc x -> acc + f x) 0
 
-let array_nth arr n =
+let rec seq_nth n seq =
+  let ( >>= ) = Option.bind in
+  Seq.uncons seq >>= fun (x, xs) -> if n = 0 then Some x else seq_nth (n - 1) xs
+
+let arr_nth n arr =
   if 0 <= n && n < Array.length arr then Some (Array.unsafe_get arr n) else None
 
-let rec remove_nth n xs =
+let arr_swap arr a b =
+  let tmp = arr.(a) in
+  arr.(a) <- arr.(b);
+  arr.(b) <- tmp
+
+let rec list_remove_nth n xs =
   match xs with
-  | x :: xs -> if n = 0 then xs else x :: remove_nth (n - 1) xs
+  | x :: xs -> if n = 0 then xs else x :: list_remove_nth (n - 1) xs
   | [] -> invalid_arg "remove_nth: Index out of bounds"
+
+let list_split_by f =
+  let rec aux l r =
+    match r with
+    | x :: xs -> if f x then (l, xs) else aux (l @ [ x ]) xs
+    | [] -> (l, [])
+  in
+  aux []
 
 let add_to_list tbl key value =
   match Hashtbl.find_opt tbl key with
@@ -28,6 +45,8 @@ let add_to_list tbl key value =
   | None -> Hashtbl.add tbl key [ value ]
 
 let tbl_contains tbl key = Hashtbl.find_opt tbl key |> Option.is_some
+
+let str_empty s = String.length s = 0
 
 let str_drop_last n s = String.sub s 0 (String.length s - n)
 

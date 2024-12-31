@@ -4,12 +4,10 @@ let parse string =
   let lines = Util.lines string in
   let len = List.length lines in
   let left, right = (make len 0, make len 0) in
-  List.iteri
-    (fun i line ->
-      Scanf.sscanf line "%i   %i" (fun l r ->
-          set left i l;
-          set right i r))
-    lines;
+  Fun.flip List.iteri lines (fun i line ->
+      Scanf.sscanf line "%i   %i" @@ fun l r ->
+      set left i l;
+      set right i r);
   sort compare left;
   sort compare right;
   (left, right)

@@ -12,3 +12,14 @@ let offset d =
   | Up -> (0, -1)
   | Right -> (1, 0)
   | Down -> (0, 1)
+
+let of_char char =
+  match char with
+  | '^' -> Up
+  | 'v' -> Down
+  | '<' -> Left
+  | '>' -> Right
+  | _ -> invalid_arg "bad direction"
+
+let is_horizontal dir = dir = Left || dir = Right
+let is_vertical dir = dir = Up || dir = Down
